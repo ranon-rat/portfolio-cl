@@ -1,0 +1,19 @@
+#menu {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+#menu-elements-container {
+    width: 100%;
+    max-width: 500px;
+    border-bottom: 2px solid black;
+    background-color: white;
+    gap: 1rem;
+    padding: 1rem;
+
+}

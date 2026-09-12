@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ranon-rat</title>
+    <link rel="stylesheet" href="/common.css">
+    <link rel="stylesheet" href="/menu.css">
+    {% block stylesheet %}
+    {% endblock %}
+</head>
+
+<body>
+    <div id="menu">
+        <nav id="menu-elements-container">
+            <a href="/#about-me" class="button">About me</a> |
+            <a href="/#stack" class="button">Stack</a> |
+            <a href="/#projects" class="button">Projects</a> |
+            <a href="https://github.com/ranon-rat" class="button">My github</a> |
+            <a href="/blog/" class="button">Blog</a>
+        </nav>
+    </div>
+    <div id="parent-container">
+        <div id="center-content">
+
+            {% block content %}
+            {% endblock %}
+        </div>
+
+    </div>
+</body>
+
+</html>

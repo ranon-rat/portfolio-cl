@@ -1,0 +1,16 @@
+*.abcl
+*.fasl
+*.dx32fsl
+*.dx64fsl
+*.lx32fsl
+*.lx64fsl
+*.x86f
+*~
+.#*
+.qlot/
+.env
+.env.local
+db
+public/blog/posts/*.html
+public/blog/index.html
+.vscode

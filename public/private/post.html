@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/common.css">
+    <link rel="stylesheet" href="post.css">
+    <script>
+
+        /*
+        Here i should have something to manage any kind of change so 
+        at the top i should have an ID so i can know 
+        */
+        fetch("/private/test-private").then(r => r.text()).then(d => {
+            if (d !== "hey i am here :)") window.location.href = "/"
+        })
+
+        window.addEventListener("DOMContentLoaded", async (e) => {
+            const idElement = document.getElementById("id-something")
+            const urlParams = new URLSearchParams(window.location.search);
+            let id = urlParams.get("id")
+            if (!id) return;
+            idElement.value = id;
+            const bodyContent = await fetch(`/private/post-json?id=${id}`).then(r => r.json())
+            const form = document.getElementById("send-info")
+            form.action = "/private/update-post"
+            document.getElementById("title").value = bodyContent.title
+            document.getElementById("image-url").value = bodyContent.imageUrl
+            document.getElementById("tags").value = bodyContent.tags
+            document.getElementById("resume").value = bodyContent.resume
+            document.getElementById("body-content").value = bodyContent.content
+        })
+
+    </script>
+</head>
+
+<body>
+    <div id="parent-container">
+        <div id="center-content">
+            <h1>Post something!!!!</h1>
+
+            <form action="/private/new-post" method="post" id="send-info">
+
+
+                <p>
+                    <input name="title" id="title" placeholder="title" class="input-form">
+                </p>
+                <p>
+                    <input name="image-url" id="image-url" placeholder="image-url" class="input-form">
+                </p>
+                <p>
+                    <input name="tags" id="tags" placeholder="tags" class="input-form">
+                </p>
+                <p>
+                    <input name="resume" id="resume" placeholder="resume" class="input-form">
+                </p>
+                <p>
+                    <textarea placeholder="body" name="content" id="body-content" class="input-form"></textarea>
+                </p>
+                <input name="id" id="id-something" value="-1" type="number" style="visibility: hidden;">
+                <p>
+
+                    <button type="submit">submit</button>
+                </p>
+            </form>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="posts.css">
+{% endblock %}
+
+
+{% block content %}
+<div>
+    <script>
+
+        window.addEventListener("DOMContentLoaded", async (e) => {
+            const edit = document.getElementById("edit")
+            const content = await fetch("/private/test-private").then(r => r.text());
+            if (content !== "hey i am here :)") return;
+            let params
+            let queryArgs = `edit=true&` +
+                `id={{post.id}}&`;
+
+            edit.innerHTML = `<a href="/private/post.html?${queryArgs}"> ✎</a> <a href="/private/delete.html?${queryArgs}">⨯</a>`
+
+        })
+    </script>
+    <h1 id="title-post">{{ post.title }}<a id="edit" href></a></h1>
+
+    <div id="content">
+        {% autoescape off %}
+        {{ post.parsed-content }}
+        {% endautoescape %}
+    </div>
+</div>
+{% endblock %}

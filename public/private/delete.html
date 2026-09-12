@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete?</title>
+    <link rel="stylesheet" href="/common.css">
+    <link rel="stylesheet" href="post.css">
+</head>
+
+<body>
+    <script>
+
+        fetch("/private/test-private").then(r => r.text()).then(d => {
+            if (d !== "hey i am here :)") window.location.href = "/"
+        })
+
+        window.addEventListener("DOMContentLoaded", async (e) => {
+            const idElement = document.getElementById("id-something")
+            const urlParams = new URLSearchParams(window.location.search);
+            let id = urlParams.get("id")
+            if (!id) return;
+            document.getElementById("id").value = id
+
+
+        })
+    </script>
+    <div id="parent-container">
+        <div id="center-content">
+            <h1>Are you sure about this?</h1>
+            <form action="/private/delete-post" method="post">
+                <input value="-1" id="id" name="id" style="visibility: hidden;">
+                <button type="submit">Delete</button>
+            </form>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+ql :all
+ql woo
+ql ningle
+ql clack
+ql yason
+ql lack
+ql trivial-rfc-1123
+ql alexandria
+ql cl-dotenv
+
+git ingle https://codeberg.org/martianh/ingle.git
+ql djula
+ql access
+ql trivial-backtrace
+ql cl-slice
+ql let-plus
+ql cl-locale
+ql arnesi
+ql collectors
+ql symbol-munger
+ql cl-annot
+ql cl-syntax
+ql trivial-types
+ql babel
+ql cl-ppcre
+ql split-sequence
+ql local-time
+ql closer-mop
+ql gettext
+ql iterate
+ql uiop
+ql cl-parser-combinators
+ql named-readtables
+ql cl-yacc
+ql cl-markdown
+ql cl-json

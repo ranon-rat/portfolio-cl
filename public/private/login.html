@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/common.css">
+    <!--script>
+        window.addEventListener("DOMContentLoaded", (_) => {
+            const form = document.getElementById("login-form")
+            form.addEventListener("submit", (e) => {
+                console.log("something something")
+                e.preventDefault()
+            })
+        })
+    </script-->
+</head>
+
+<body>
+    <div id="parent-container">
+        <div id="center-content">
+            <h1>Log in</h1>
+
+            <form id="login-form" method="post" action="/login">
+                <input type="text" name="password">
+                <button id="release" type="submit">Log In</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
