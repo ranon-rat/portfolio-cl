@@ -38,8 +38,8 @@
                               :tags (ingle:get-param "tags" params)
                               :resume (ingle:get-param "resume" params))))
     (add-new-to-db new-post)
-    (rebuild-blog-index)
     (build-post new-post)
+    (rebuild-blog-index)
 
     `(302 (:location ,(format nil "/blog/posts/~a.html" id)) ())))
 ; POST /private/update-post

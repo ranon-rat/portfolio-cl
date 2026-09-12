@@ -15,7 +15,7 @@
                                   :direction :output ; Open for writing
                                   :if-exists :supersede ; Overwrite if file exists
                                   :if-does-not-exist :create) ; Create file if missing
-            (format stream (funcall execute))))))
+            (write-string (funcall execute) stream)))))
 ; for this i must 1 check if the file index.html exist in ./public/blog
 (defun create-blog-index ()
   (let* ((path-to-template (asdf:system-relative-pathname :portfolio-cl "templates/blog.html"))
@@ -29,7 +29,13 @@
     (create-if-newer-version :path path-to-db :result-path path-to-public :execute func)))
 
 (defun rebuild-blog-index ()
-  (create-blog-index))
+  (let ((path-to-public (asdf:system-relative-pathname :portfolio-cl "public/blog/index.html"))
+        (posts (get-posts-from-db)))
+    (with-open-file (stream path-to-public
+                            :direction :output ; Open for writing
+                            :if-exists :supersede ; Overwrite if file exists
+                            :if-does-not-exist :create) ; Create file if missing
+      (write-string (djula:render-template* "blog.html" nil :posts (mapcar #'post->alist posts)) stream))))
 
 (defun get-amount-posts ()
   (let ((path (asdf:system-relative-pathname :portfolio-cl "public/blog/posts")))

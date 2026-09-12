@@ -6,7 +6,7 @@ It also has a very simple blog which functions in a simple way without having to
 
 ## how to Run
 
-You will require to install [sbcl](https://www.sbcl.org/), and [qlot](https://github.com/fukamachi/qlot)
+You will require to install [sbcl](https://www.sbcl.org/), [qlot](https://github.com/fukamachi/qlot) and `libmagic-dev`
 
 After that you can run it by just running the next command
 
