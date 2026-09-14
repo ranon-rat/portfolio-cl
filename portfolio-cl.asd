@@ -26,6 +26,7 @@
              (:file "handlers")
              (:file "templates")
              (:file "routers")
+             (:file "markdown")
              (:file "db"))))
 
   :description "")
