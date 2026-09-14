@@ -32,5 +32,9 @@ ql uiop
 ql cl-parser-combinators
 ql named-readtables
 ql cl-yacc
-ql cl-markdown
 ql cl-json
+ql cl-markdown
+ql metatilities-base
+ql metabang-bind
+ql dynamic-classes
+ql cl-containers

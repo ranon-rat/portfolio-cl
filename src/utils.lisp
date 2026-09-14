@@ -19,10 +19,58 @@
       (decode-universal-time unix-time)
     (declare (ignore time-zone daylight-saving-time-p day-of-week minute hour second))
     (format nil "~d-~2,'0d-~2,'0d" year month date)))
-(defun render-markdown (content)
-  (with-output-to-string (s)
-    (cl-markdown:markdown content :stream s)))
+(defun fenced-code-marker-length (line)
+  "Return the length of a backtick fence at the start of LINE, if any."
+  (let ((trimmed (string-left-trim '(#\Space #\Tab) line)))
+    (when (and (>= (length trimmed) 3)
+               (char= (char trimmed 0) #\`)
+               (char= (char trimmed 1) #\`)
+               (char= (char trimmed 2) #\`))
+      (loop for index from 0 below (length trimmed)
+            while (char= (char trimmed index) #\`)
+            finally (return index)))))
 
+(defun closing-fence-p (line opening-length)
+  "Whether LINE closes a backtick fence with OPENING-LENGTH backticks."
+  (let* ((trimmed (string-left-trim '(#\Space #\Tab) line))
+         (length (fenced-code-marker-length trimmed)))
+    (and length
+         (>= length opening-length)
+         (every (lambda (character)
+                  (member character '(#\Space #\Tab)))
+                (subseq trimmed length)))))
+
+(defun escape-markdown-eval (line)
+  "Prevent cl-markdown's {command} extension syntax in user-authored prose."
+  (with-output-to-string (out)
+    (loop for character across line do
+      (when (member character '(#\{ #\}))
+        (write-char #\\ out))
+      (write-char character out))))
+
+(defun normalize-fenced-code-blocks (content)
+  "Translate GitHub-style fenced blocks to cl-markdown's indented blocks.
+
+CL-MARKDOWN predates fenced blocks.  Without this conversion it parses the
+contents as ordinary Markdown, including its {command} evaluation syntax."
+  (with-input-from-string (input content)
+    (with-output-to-string (output)
+      (loop with opening-length = nil
+            for line = (read-line input nil nil)
+            while line do
+              (cond
+                (opening-length
+                 (if (closing-fence-p line opening-length)
+                     (setf opening-length nil)
+                     (format output "    ~A~%" line)))
+                ((fenced-code-marker-length line)
+                 (setf opening-length (fenced-code-marker-length line)))
+                (t
+                 (format output "~A~%" (escape-markdown-eval line))))))))
+
+(defun render-markdown (content)
+  (with-output-to-string (stream)
+    (cl-markdown:markdown (normalize-fenced-code-blocks content) :stream stream)))
 
 (defun escape-line (string)
   (with-output-to-string (out)

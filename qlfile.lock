@@ -130,11 +130,27 @@
  (:class qlot/source/ql:source-ql
   :initargs (:%version :latest)
   :version "ql-2026-01-01"))
-("cl-markdown" .
- (:class qlot/source/ql:source-ql
-  :initargs (:%version :latest)
-  :version "ql-2019-12-27"))
 ("cl-json" .
  (:class qlot/source/ql:source-ql
   :initargs (:%version :latest)
   :version "ql-2022-07-07"))
+("cl-markdown" .
+ (:class qlot/source/ql:source-ql
+  :initargs (:%version :latest)
+  :version "ql-2019-12-27"))
+("metatilities-base" .
+ (:class qlot/source/ql:source-ql
+  :initargs (:%version :latest)
+  :version "ql-2019-12-27"))
+("metabang-bind" .
+ (:class qlot/source/ql:source-ql
+  :initargs (:%version :latest)
+  :version "ql-2023-06-18"))
+("dynamic-classes" .
+ (:class qlot/source/ql:source-ql
+  :initargs (:%version :latest)
+  :version "ql-2023-10-21"))
+("cl-containers" .
+ (:class qlot/source/ql:source-ql
+  :initargs (:%version :latest)
+  :version "ql-2024-10-12"))

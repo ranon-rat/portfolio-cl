@@ -50,6 +50,14 @@
          (func (lambda () (djula:render-template* "post.html" nil :post (post->alist post)))))
     (create-if-newer-version :path path-to-base :result-path path-to-public :execute func)
     (create-if-newer-version :path path-to-template :result-path path-to-public :execute func)))
+
+(defun rebuild-post (post)
+  (let ((path-to-public (asdf:system-relative-pathname :portfolio-cl (format nil "public/blog/posts/~a.html" (post-id post)))))
+    (with-open-file (stream path-to-public
+                            :direction :output ; Open for writing
+                            :if-exists :supersede ; Overwrite if file exists
+                            :if-does-not-exist :create) ; Create file if missing
+      (write-string (djula:render-template* "post.html" nil :post (post->alist post)) stream))))
 (defun delete-post-template (id)
   (let ((path-to-public (asdf:system-relative-pathname :portfolio-cl (format nil "public/blog/posts/~a.html" id))))
     (delete-file path-to-public)))

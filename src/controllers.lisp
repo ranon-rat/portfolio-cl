@@ -63,7 +63,7 @@
       (return-from update-post '(302 (:location "/blog/") (""))))
     (update-from-db updated-post)
     (rebuild-blog-index)
-    (build-post updated-post)
+    (rebuild-post updated-post)
     `(302 (:location ,(format nil "/blog/posts/~a.html" id)) ())))
 ; POST /private/delete-post
 (defun delete-post (params)
