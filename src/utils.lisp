@@ -26,9 +26,9 @@
                (char= (char trimmed 0) #\`)
                (char= (char trimmed 1) #\`)
                (char= (char trimmed 2) #\`))
-      (loop for index from 0 below (length trimmed)
-            while (char= (char trimmed index) #\`)
-            finally (return index)))))
+          (loop for index from 0 below (length trimmed)
+                while (char= (char trimmed index) #\`)
+                finally (return index)))))
 
 (defun closing-fence-p (line opening-length)
   "Whether LINE closes a backtick fence with OPENING-LENGTH backticks."
@@ -38,15 +38,15 @@
          (>= length opening-length)
          (every (lambda (character)
                   (member character '(#\Space #\Tab)))
-                (subseq trimmed length)))))
+             (subseq trimmed length)))))
 
 (defun escape-markdown-eval (line)
   "Prevent cl-markdown's {command} extension syntax in user-authored prose."
   (with-output-to-string (out)
     (loop for character across line do
-      (when (member character '(#\{ #\}))
-        (write-char #\\ out))
-      (write-char character out))))
+            (when (member character '(#\{ #\}))
+                  (write-char #\\ out))
+            (write-char character out))))
 
 (defun normalize-fenced-code-blocks (content)
   "Translate GitHub-style fenced blocks to cl-markdown's indented blocks.
@@ -56,20 +56,31 @@ contents as ordinary Markdown, including its {command} evaluation syntax."
   (with-input-from-string (input content)
     (with-output-to-string (output)
       (loop with opening-length = nil
-            for line = (read-line input nil nil)
-            while line do
+            for raw-line = (read-line input nil nil)
+            while raw-line
+            ;; READ-LINE removes #\Newline but leaves #\Return from CRLF
+            ;; input, which would otherwise prevent a closing ``` from matching.
+            for line = (string-right-trim '(#\Return) raw-line)
+            do
               (cond
                 (opening-length
                  (if (closing-fence-p line opening-length)
-                     (setf opening-length nil)
+                     ;; The closing fence is removed, so add a blank line to
+                     ;; terminate cl-markdown's indentation-based code block.
+                     (progn
+                       (setf opening-length nil)
+                       (terpri output))
                      (format output "    ~A~%" line)))
-                ((fenced-code-marker-length line)
-                 (setf opening-length (fenced-code-marker-length line)))
-                (t
+               ((fenced-code-marker-length line)
+                 ;; CL-MARKDOWN requires a blank line before an indented block.
+                 (setf opening-length (fenced-code-marker-length line))
+                 (terpri output))
+               (t
                  (format output "~A~%" (escape-markdown-eval line))))))))
 
 (defun render-markdown (content)
   (with-output-to-string (stream)
+    (format t "~a~%" (normalize-fenced-code-blocks content))
     (cl-markdown:markdown (normalize-fenced-code-blocks content) :stream stream)))
 
 (defun escape-line (string)

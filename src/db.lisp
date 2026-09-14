@@ -33,7 +33,7 @@
               do
                 (when (string/= current-id to-delete-id)
 
-                      (format out-stream "~a" line)))))
+                      (format out-stream "~a~%" line)))))
     (delete-file *path-to-db*)
     (rename-file temp-db *path-to-db*)))
 
