@@ -1,13 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-  <!--
-  
-  (defstruct sitemap-url
-  (url "" :type string)
-  (last-mod "" :type string)
-  (changefreq "weekly" :type string)
-  (priority 1 :type number))
-
-  -->
 <urlset xmlns="http://sitemaps.org">
     {% for sitemap in sitemaps %}
       <url>
