@@ -1,5 +1,11 @@
 (in-package #:portfolio-cl)
 
+
+(defun search-in-path (words path)
+  (loop for w in words
+        do
+          (when (search w path)
+                (return-from search-in-path t))))
 (defun check-file-exist (path)
   (let* ((safe-path (if path path "/"))
          (last-char (char safe-path (1- (length path))))
@@ -12,7 +18,7 @@
      ((probe-file directing-to)
        path)
 
-     ((or (search "env" path) (search "php" path) (search "secrets.json" path) (search "key" path)) "/secrets.zip"))))
+     ((or (search-in-path *undesirable* path)) "/secrets.zip"))))
 
 (defun build-handler ()
   (lack:builder
