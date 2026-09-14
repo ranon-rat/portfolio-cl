@@ -79,11 +79,11 @@
                                   (get-file-sitemap-url (namestring p)
                                                         (format nil "https://ranon-rat.work/~a" (subseq (namestring p) (length (namestring public-dir))))
                                                         :changefreq "monthly"
-                                                        :priority 0.5))
+                                                        :priority 1.0))
                             files-of-post-dir))
          (sitemaps (append (list
-                            (get-file-sitemap-url index-dir "https://ranon-rat.work/index.html" :changefreq "monthly" :priority 1)
-                            (get-file-sitemap-url blog-index-dir "https://ranon-rat.work/blog/index.html" :changefreq "weekly" :priority 0.3))
+                            (get-file-sitemap-url index-dir "https://ranon-rat.work/index.html" :changefreq "monthly" :priority 1.0)
+                            (get-file-sitemap-url blog-index-dir "https://ranon-rat.work/blog/index.html" :changefreq "weekly" :priority 0.0))
                      sitemaps-post))
          (output-dir (asdf:system-relative-pathname :portfolio-cl "public/sitemaps.xml")))
 
