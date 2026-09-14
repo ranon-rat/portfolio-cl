@@ -10,7 +10,7 @@
 ;env
 (defvar *password* "1234")
 (defvar *port* 8080)
-(defvar *undesirable* (list "env" "php" ".json" "key" "py" "admin" "mjs" ".properties"))
+(defvar *undesirable* (list "env" "php" ".json" "key" "py" "admin" "mjs" ".properties" ".xml"))
 
 (defun setup-variables ()
   (let ((password (uiop:getenv "PASSWORD"))

@@ -14,11 +14,9 @@
     (cond
      ((uiop:directory-exists-p directing-to)
        (format nil "~a~a~a" safe-path (if (char= last-char #\/) "" "/") "index.html"))
-
      ((probe-file directing-to)
        path)
-
-     ((or (search-in-path *undesirable* path)) "/secrets.zip"))))
+     ((search-in-path *undesirable* path) "/secrets.zip"))))
 
 (defun build-handler ()
   (lack:builder
