@@ -19,7 +19,7 @@
   (let* ((id (ingle:get-param "id" params))
          (post (get-individual-post id)))
     (format t "~a~%" post)
-    (cl-json:encode-json-to-string (post->alist post))))
+    (cl-json:encode-json-to-string (struct->alist post))))
 ; POST /private/new-post
 (defun post-new-post (params)
   ; here what i should do its simple i should get the information
@@ -40,6 +40,7 @@
     (add-new-to-db new-post)
     (build-post new-post)
     (rebuild-blog-index)
+    (generate-sitemaps)
 
     `(302 (:location ,(format nil "/blog/posts/~a.html" id)) ())))
 ; POST /private/update-post
@@ -64,6 +65,8 @@
     (update-from-db updated-post)
     (rebuild-blog-index)
     (rebuild-post updated-post)
+    (generate-sitemaps)
+
     `(302 (:location ,(format nil "/blog/posts/~a.html" id)) ())))
 ; POST /private/delete-post
 (defun delete-post (params)
@@ -74,4 +77,6 @@
     (delete-from-db id)
     (delete-post-template id)
     (rebuild-blog-index)
+    (generate-sitemaps)
+
     '(302 (:location "/blog/") (""))))

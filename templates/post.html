@@ -1,5 +1,31 @@
 {% extends "base.html" %}
 
+
+{% block metablocks %}
+<meta name="title" content="{{post.title}}" />
+<meta name="description" content="{{post.resume}}" />
+<meta name="author" content="ranon-rat" />
+
+
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="{{post.title}}" />
+<meta property="og:description" content="{{post.resume}}" />
+<meta property="og:image" content="{{post.image-url}}" />
+<meta property="og:url" content="https://ranon-rat.work/blog/posts/{{post.id}}.html" />
+
+
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="post.title" />
+<meta name="twitter:description" content="{{post.resume}}" />
+<meta name="twitter:image" content="{{post.image-url}}" />
+
+
+{% endblock %}
+
+
+
 {% block stylesheet %}
 <link rel="stylesheet" href="posts.css">
 {% endblock %}

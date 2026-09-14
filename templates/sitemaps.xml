@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!--
+  
+  (defstruct sitemap-url
+  (url "" :type string)
+  (last-mod "" :type string)
+  (changefreq "weekly" :type string)
+  (priority 1 :type number))
+
+  -->
+<urlset xmlns="http://sitemaps.org">
+    {% for sitemap in sitemaps %}
+      <url>
+        <loc>{{sitemap.url}}</loc>
+        <lastmod>{{sitemap.last-mod}}</lastmod>
+        <changefreq>{{sitemap.changefreq}}</changefreq>
+        <priority>{{sitemap.priority}}</priority>
+      </url>
+    {% endfor %}
+</urlset>

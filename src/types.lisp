@@ -17,13 +17,23 @@
         (*print-circle* t)
         (*print-pretty* nil))
     (write-to-string p)))
-(defun post->alist (p)
-  (let* ((class (class-of p))
-         (slots (closer-mop:class-slots class)))
-    (mapcar (lambda (slot)
-              (let ((slot-name (closer-mop:slot-definition-name slot)))
-                (cons slot-name (slot-value p slot-name))))
-        slots)))
+
 (defun text->post (txt)
   (let ((*read-eval* nil))
     (read-from-string txt)))
+
+
+(defstruct sitemap-url
+  (url "" :type string)
+  (last-mod "" :type string)
+  (changefreq "weekly" :type string)
+  (priority 1 :type number))
+
+(defun get-file-sitemap-url (path url &key (changefreq "weekly") (priority 1))
+  (let* ((date (check-write-date path))
+         (last-mod (unix-time-to-str date)))
+    (make-sitemap-url
+     :url url
+     :last-mod last-mod
+     :changefreq changefreq
+     :priority priority)))

@@ -21,6 +21,14 @@
     (format nil "~d-~2,'0d-~2,'0d" year month date)))
 
 
+(defun struct->alist (p)
+  (let* ((class (class-of p))
+         (slots (closer-mop:class-slots class)))
+    (mapcar (lambda (slot)
+              (let ((slot-name (closer-mop:slot-definition-name slot)))
+                (cons slot-name (slot-value p slot-name))))
+        slots)))
+
 (defun escape-line (string)
   (with-output-to-string (out)
     (loop for c across string do

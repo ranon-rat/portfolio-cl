@@ -14,3 +14,4 @@ db
 public/blog/posts/*.html
 public/blog/index.html
 .vscode
+public/sitemaps.xml
