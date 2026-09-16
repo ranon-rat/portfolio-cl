@@ -27,7 +27,9 @@
   (url "" :type string)
   (last-mod "" :type string)
   (changefreq "weekly" :type string)
-  (priority 1 :type number))
+  ;; Kept as a string: <priority> must be a plain decimal such as 0.8, and
+  ;; printing a float leans on *READ-DEFAULT-FLOAT-FORMAT*.
+  (priority "1.0" :type string))
 
 (defun get-file-sitemap-url (path url &key (changefreq "weekly") (priority 1))
   (let* ((date (check-write-date path))
@@ -36,4 +38,4 @@
      :url url
      :last-mod last-mod
      :changefreq changefreq
-     :priority priority)))
+     :priority (format nil "~,1F" priority))))
