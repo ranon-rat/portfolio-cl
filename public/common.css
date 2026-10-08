@@ -20,8 +20,31 @@ a {
 
 #center-content {
     max-width: 500px;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
 
     /*margin-left: 50%;
     /*margin-right:50%;
 */
+}
+
+#center-content img,
+#center-content pre {
+    max-width: 100%;
+}
+
+#center-content pre {
+    overflow-x: auto;
+}
+
+@media (max-width: 500px) {
+    body {
+        padding-top: 0;
+    }
+
+    #center-content {
+        padding: 0 0.5rem;
+    }
 }
